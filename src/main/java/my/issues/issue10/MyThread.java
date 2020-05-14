@@ -13,6 +13,7 @@ public class MyThread {
         for (int i = 0; i < numbers.length; i++) {
             numbers[i] = (int) (Math.random() * 1000000);
         }
+        System.out.println("Main Thread: " + Thread.currentThread().getName());
 
         //MIN
         executorService.submit(() -> {
@@ -21,7 +22,7 @@ public class MyThread {
                 sum += n;
             }
             double min = sum / numbers.length;
-            System.out.printf("MIN = %.2f%n", min);
+            System.out.printf("%s: MIN = %.2f%n", Thread.currentThread().getName(), min);
         });
 
         //MOD
@@ -38,7 +39,7 @@ public class MyThread {
                     element = tempElement;
                 }
             }
-            System.out.println("MOD = " + element);
+            System.out.println(Thread.currentThread().getName() + ": MOD = " + element);
         });
 
         //MEDIAN
@@ -47,9 +48,9 @@ public class MyThread {
             int oddMedian = numbers[numbers.length / 2];
             double evenMedian = (numbers[numbers.length / 2] + numbers[(numbers.length / 2) - 1]) / 2;
             if (numbers.length % 2 != 0) {
-                System.out.println("MEDIAN = " + oddMedian);
+                System.out.println(Thread.currentThread().getName() + ": MEDIAN = " + oddMedian);
             } else {
-                System.out.printf("MEDIAN = %.2f%n", evenMedian);
+                System.out.printf("%s: MEDIAN = %.2f%n", Thread.currentThread().getName(), evenMedian);
             }
         });
 
