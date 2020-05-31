@@ -1,16 +1,6 @@
 {
   "tests": [
     {
-      "name": "Test-Issues",
-      "setup": "",
-      "run": "mvn compile",
-      "input": "",
-      "output": "",
-      "comparison": "included",
-      "timeout": 10,
-      "points": null
-    },
-    {
       "name": "Test-Compile",
       "setup": "",
       "run": "mvn compile",
