@@ -32,6 +32,7 @@ public class WriteToFile {
                     }
                 }
                 fileWriter.write("Odd number done created.");
+
                 fileWriter.flush();
                 fileWriter.close();
             } catch (IOException e) {
