@@ -1,41 +1,38 @@
 package my.issues.issue16;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
-public class MyCallable {
-
-    public static int max(int[] data) throws InterruptedException, ExecutionException {
-        if (data.length == 1) return data[0];
-        else if (data.length == 0) throw new IllegalArgumentException();
-
-        FindMaxTask task1 = new FindMaxTask(data, 0, data.length / 2);
-        FindMaxTask task2 = new FindMaxTask(data, data.length / 2, data.length);
-
-        ExecutorService service = Executors.newFixedThreadPool(2);
-
-        Future<Integer> future1 = service.submit(task1);
-        Future<Integer> future2 = service.submit(task2);
-
-        return Math.max(future1.get(), future2.get());
-
-    }
+public class MyCallable implements Callable<Integer> {
 
     public static void main(String[] args) {
-        // TODO code application logic here
-        int[] a = {1};
 
-        for (int i = 0; i < a.length; i++)
-            System.out.println(a[i]);
-
-        System.out.print("Max number:");
+        Callable<Integer> myCallable = new MyCallable();
+        ExecutorService service = Executors.newCachedThreadPool();
+        Future<Integer> future = service.submit(myCallable);
         try {
-            System.out.println(MyCallable.max(a));
-        } catch (Exception e) {
-            e.printStackTrace();
+            Integer max = future.get();
+            System.out.println("Maximum Number: " + max);
+        } catch (InterruptedException | ExecutionException e) {
+            System.out.println("Failed");
         }
 
+        service.shutdown();
+    }
+
+    @Override
+    public Integer call() throws Exception {
+        int number[] = new int[100];
+        int max = Integer.MIN_VALUE;
+
+        for (int i = 0; i < 10; i++) {
+            number[i] = ThreadLocalRandom.current().nextInt(100);
+            System.out.println("Number " + (i + 1) + ": " + number[i]);
+
+            if (number[i] > max) {
+                max = number[i];
+            }
+        }
+
+        return max;
     }
 }
