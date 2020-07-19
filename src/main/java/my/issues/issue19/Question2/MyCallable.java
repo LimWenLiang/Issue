@@ -1,37 +1,28 @@
 package my.issues.issue19.Question2;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 public class MyCallable {
 
-    public static int calculate(int[] num1) throws ExecutionException, InterruptedException {
-        int total = 0;
-        if (num1.length == 1) return num1[0];
-        else if (num1.length == 0) throw new IllegalArgumentException();
-
-        for (int j = 1; j <= 3; j++) {
-
-        }
-
-        ExecutorService service = Executors.newFixedThreadPool(3);
-
+    public void main() {
 
         for (int i = 1; i <= 3; i++) {
-            System.out.println(Thread.currentThread().getName());
-        }
-
-        return total;
-    }
-
-    public static void main(String[] args) {
-        int[] a = {1, 2, 3};
-
-        try {
-            System.out.println(MyCallable.calculate(a));
-        } catch (Exception e) {
-            e.printStackTrace();
+            FutureTask<Integer> futureTask = new FutureTask<>(new C_Multiplication(i));
+            Thread thread = new Thread(futureTask);
+            thread.start();
         }
     }
+
+    public static void main(String[] args) throws InterruptedException {
+        long startTime = System.currentTimeMillis();
+
+        new MyCallable().main();
+
+        long endTime = System.currentTimeMillis();
+        long executionTime = endTime - startTime;
+
+        Thread.sleep(500);
+        System.out.println("\nExecution Time: " + executionTime + " milliseconds");
+    }
+
 }

@@ -14,7 +14,7 @@ public class GUIThread {
     private JTextArea output;
 
     public GUIThread() {
-        mainFrame = new JFrame("Multiplication");
+        mainFrame = new JFrame("R_Multiplication");
         mainFrame.setSize(500, 250);
         mainFrame.setLayout(null);
         mainFrame.setDefaultCloseOperation(3);
